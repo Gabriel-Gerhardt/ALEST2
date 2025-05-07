@@ -22,7 +22,7 @@ func (h *heapmax) swin(posicao int) {
 }
 
 func (h *heapmax) heapify(posicao int) {
-	pai := h.chaves[(posicao-1)/2]
+	pai := h.chaves[posicao]
 	if (posicao*2 + 1) > len(h.chaves)-1 {
 		return
 	}
@@ -48,13 +48,30 @@ func (h *heapmax) heapify(posicao int) {
 
 }
 
-func (h *heapmax) removerMaximo() {
+func (h *heapmax) removerMaximo() int {
 	if len(h.chaves) == 0 {
-		return
+		return 0
 	}
 	temp := h.chaves[len(h.chaves)-1]
 	h.chaves[0] = temp
 	newArray := h.chaves[:len(h.chaves)-1]
 	h.chaves = newArray
 	h.heapify(0)
+	return temp
+
+}
+func (h *heapmax) heapsort() []int {
+
+	// Primeiro, inserir todos no heap
+	for _, valor := range h.chaves {
+		h.inserir(valor)
+	}
+
+	// Agora, remover do heap para formar o array ordenado
+	resultado := make([]int, len(h.chaves))
+	for i := len(h.chaves) - 1; i >= 0; i-- {
+		resultado[i] = h.removerMaximo()
+	}
+
+	return resultado
 }
