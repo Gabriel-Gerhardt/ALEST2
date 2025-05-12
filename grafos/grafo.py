@@ -5,36 +5,22 @@ class Grafo:
         self.nArestas = nArestas
 
     def adicionarAresta(self, v, w):
-        if self.matriz[v][w] ==False:
-
+        if not self.matriz[v][w]:
             self.matriz[v][w] = True
             self.matriz[w][v] = True
             self.nArestas += 1
 
-    def removerAresta(self,v,w):
-        if self.matriz[v][w] ==True:
-
+    def removerAresta(self, v, w):
+        if self.matriz[v][w]:
             self.matriz[v][w] = False
             self.matriz[w][v] = False
-            self.nArestas -=1
+            self.nArestas -= 1
 
     def obterGrau(self, v):
-        cont=0
-        for i in range(self.nVertices):
-            if self.matriz[v][i] == True:
-                cont+=1
+        return sum(self.matriz[v])
 
-        return cont
-
-
-    def adjacentes(self,v):
-        lista= []
-        for i in range(self.nVertices):
-            if self.matriz[v][i] == True:
-                lista.append(i)
-
-        return lista
-
+    def adjacentes(self, v):
+        return [i for i in range(self.nVertices) if self.matriz[v][i]]
 
     def gerarDot(self):
         print("graph G {")
@@ -43,6 +29,18 @@ class Grafo:
                 if self.matriz[i][j]:
                     print(f"    {i} -- {j};")
         print("}")
+
+    def buscarProfundidade(self, chave):
+        visitados = [False] * self.nVertices
+        self.buscarProfundidadeRecursivo(chave, visitados)
+
+    def buscarProfundidadeRecursivo(self, chave, visitados):
+        if visitados[chave]:
+            return
+        visitados[chave] = True
+        print(chave)
+        for i in self.adjacentes(chave):
+            self.buscarProfundidadeRecursivo(i, visitados)
 
 
 def main():
@@ -53,9 +51,8 @@ def main():
     grafo.adicionarAresta(0, 1)
     grafo.adicionarAresta(0, 2)
     grafo.adicionarAresta(1, 3)
-    grafo.removerAresta(0,2)
 
-
+    grafo.buscarProfundidade(0)
     grafo.gerarDot()
 
 main()
