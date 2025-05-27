@@ -9,9 +9,6 @@ class GrafoAdjecencia:
     def obterAdjacentes(self):
         return None
 
-
-
-
     def adicionarAresta(self, v, w):
         self.listaAdjacencia[v].append(w)
         if not(self.direcionado):
