@@ -40,17 +40,3 @@ class GrafoAdjecencia:
                     if not self.direcionado:
                         visitados.add((v, w))
         print("}")
-
-
-
-def main():
-    n = 5
-    grafo = GrafoAdjecencia(n,True)
-
-    grafo.adicionarAresta(0, 1)
-    grafo.adicionarAresta(0, 2)
-    grafo.adicionarAresta(1, 3)
-
-    grafo.gerarDot()
-
-main()
